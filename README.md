@@ -40,5 +40,5 @@ curl -o ncxlib.mnist.data <perma-link>
 
 | Dataset | Description | Permanent Link
 |---------|-------------|--------|
-| **MNIST** | A dataset for handwritten number images and labels by the NIST foundation. | [Link](https://link.com/)
+| **MNIST** | A dataset for handwritten number images and labels by the NIST foundation. | [Link](https://ncxlib.s3.us-east-1.amazonaws.com/data/mnist/ncxlib.mnist.data.gz)
 
