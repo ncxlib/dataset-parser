@@ -16,22 +16,7 @@ Each data file is named as ncxlib.<dataset-name>.data inside the data/<dataset-n
 ```
 
 ## Getting started
-You can easily load any of the datasets using their perma-link and python pickle module like so:
-```python
-import pickle
-import urllib.request
-
-with urllib.request.urlopen(<dataset-file-link>) as f:
-    data = pickle.load(f.read())
-
-train_set = data["X_train"]
-
-# Print the length only since dataset size can be big
-print(f"Retrieved train set size of {len(train_set)}")
-```
-
-You can also directly download the dataset using curl:
-
+You can directly download the dataset using curl:
 ```shell
 curl -o ncxlib.mnist.data <perma-link>
 ```
