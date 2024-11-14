@@ -63,5 +63,6 @@ def process(data, file):
 
 if __name__ == "__main__":
     data = new()
+    data["split"] = True
     [process(data, f) for f in files]
     save_data(data, name)

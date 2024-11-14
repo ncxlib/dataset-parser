@@ -1,5 +1,6 @@
-import pickle 
+import pickle
 import boto3
+import gzip
 from dotenv import load_dotenv
 import os
 
@@ -7,7 +8,7 @@ load_dotenv()
 
 parent_dir = "data"
 lib_name = "ncxlib"
-postfix = "data"
+postfix = "data.gz"
 raw = "raw"
 bucket = "ncxlib"
 
@@ -20,7 +21,6 @@ def connect_aws():
             aws_access_key_id=os.getenv("AWS_ACCESS_KEY_ID"),
             aws_secret_access_key=os.getenv("AWS_SECRET_ACCESS_KEY"),
         )
-
     return session
 
 def prefix(name):
@@ -28,6 +28,7 @@ def prefix(name):
 
 def new():
     return {
+        "split": True,
         "X_train": [],
         "X_test": [],
         "y_train": [],
@@ -39,13 +40,13 @@ def build_path(name):
 
 def save_data(data, name):
     file_path = build_path(name)
-    with open(file_path, "wb") as f:
+    with gzip.open(file_path, "wb") as f:
         pickle.dump(data, f)
 
     session = connect_aws()
     s3 = session.resource('s3')
 
-    print("Uploading datafile to S3 bucket...")
+    print("Uploading compressed data file to S3 bucket...")
     s3.Bucket(bucket).upload_file(file_path, file_path)
 
     print("Upload successful!")
@@ -56,11 +57,11 @@ def load_data(name):
     session = connect_aws()
     s3 = session.resource('s3')
 
-    print("Downloading data from S3...")
+    print("Downloading compressed data from S3...")
     s3.Bucket(bucket).download_file(file_path, file_path)
     print("Download successful!")
     
-    with open(file_path, "rb") as f:
+    with gzip.open(file_path, "rb") as f: 
         data = pickle.load(f)
     
     return data
