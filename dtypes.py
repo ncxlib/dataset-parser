@@ -1,0 +1,2 @@
+INT = ">i"
+UBYTE = ">B"
